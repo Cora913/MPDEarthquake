@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="org.me.gcu.mpdearthquake.fragments.HomeFragment"
+        android:label="@string/home_tab"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_date"
+        android:name="org.me.gcu.mpdearthquake.fragments.DateFragment"
+        android:label="@string/date_tab"
+        tools:layout="@layout/fragment_date" />
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="org.me.gcu.mpdearthquake.fragments.MapFragment"
+        android:label="@string/map_tab"
+        tools:layout="@layout/fragment_map" />
+</navigation>

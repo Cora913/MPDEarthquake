@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MPDEarthquake</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_tab">Earthquakes</string>
+    <string name="date_tab">Search Date</string>
+    <string name="map_tab">Map</string>
+    <string name="earthquake_depth">Depth: %1$s</string>
+    <string name="earthquake_magnitude">Magnitude: %1$s</string>
+    <string name="earthquake_lat">Latitude: %1$s</string>
+    <string name="earthquake_long">Longitude: %1$s</string>
+    <string name="earthquake_date">Date: %1$s</string>
+    <string name="earthquake_category">Category: %1$s</string>
+    <string name="view_details">View Details</string>
+</resources>
