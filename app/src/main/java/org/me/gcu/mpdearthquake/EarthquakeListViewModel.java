@@ -18,7 +18,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -97,6 +100,18 @@ public class EarthquakeListViewModel extends ViewModel {
                             String text = xpp.nextText();
                             earthquake.setDescription(text);
                             Log.e("XMLParser", "Description found: " + text);
+
+                            String[] parsedDescription = text.split(" ; ");
+                            Map<String, String> kv = new HashMap<>();
+                            for (String item : parsedDescription) {
+                                String[] parsedItem = item.split(":");
+                                kv.put(parsedItem[0], parsedItem[1].trim());
+                            }
+                            earthquake.setLocation(kv.get("Location"));
+                            String[] parsedMagnitude = kv.get("Magnitude").trim().split(" ");
+                            earthquake.setMagnitude(Float.parseFloat(parsedMagnitude[0]));
+                            String[] parsedDepth = kv.get("Depth").trim().split(" ");
+                            earthquake.setDepth(Float.parseFloat(parsedDepth[0]));
                         } else if (tagName.equalsIgnoreCase("link")) {
                             String text = xpp.nextText();
                             earthquake.setLink(text);

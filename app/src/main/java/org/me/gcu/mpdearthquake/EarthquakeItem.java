@@ -5,25 +5,14 @@ import java.text.SimpleDateFormat;
 public class EarthquakeItem {
     private String title;
     private String description;
+    private String location;
+    private float magnitude;
+    private float depth;
     private String link;
     private String date;
     private String category;
     private float lat;
     private float lon;
-
-    public EarthquakeItem() {
-
-    }
-
-    public EarthquakeItem(String title, String description, String link, String date, String category, float lat, float lon) {
-        this.title = title;
-        this.description = description;
-        this.link = link;
-        this.date = date;
-        this.category = category;
-        this.lat = lat;
-        this.lon = lon;
-    }
 
     public String getTitle() {
         return title;
@@ -39,6 +28,30 @@ public class EarthquakeItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public float getMagnitude() {
+        return magnitude;
+    }
+
+    public void setMagnitude(float magnitude) {
+        this.magnitude = magnitude;
+    }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(float depth) {
+        this.depth = depth;
     }
 
     public String getLink() {
@@ -80,6 +93,4 @@ public class EarthquakeItem {
     public void setLon(float lon) {
         this.lon = lon;
     }
-
-
 }

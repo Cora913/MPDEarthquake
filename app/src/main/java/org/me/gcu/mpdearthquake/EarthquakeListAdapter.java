@@ -79,33 +79,21 @@ public class EarthquakeListAdapter extends BaseAdapter {
             TextView dateText = (TextView) view.findViewById(R.id.dateText);
             TextView categoryText = (TextView) view.findViewById(R.id.categoryText);
 
-            String[] parsedDescription = earthquake.getDescription().split(" ; ");
-            Log.e("EarthquakeListAdapter", Arrays.toString(parsedDescription));
-            Map<String, String> kv = new HashMap<>();
-            for (String item : parsedDescription) {
-                String[] parsedItem = item.split(":");
-                kv.put(parsedItem[0], parsedItem[1].trim());
-            }
-            locationText.setText(kv.get("Location"));
-            depthText.setText(context.getString(R.string.earthquake_depth, kv.get("Depth")));
-            magnitudeText.setText(context.getString(R.string.earthquake_magnitude, kv.get("Magnitude")));
+            locationText.setText(earthquake.getLocation());
+            depthText.setText(context.getString(R.string.earthquake_depth, earthquake.getDepth()));
+            magnitudeText.setText(context.getString(R.string.earthquake_magnitude, earthquake.getMagnitude()));
             latText.setText(context.getString(R.string.earthquake_lat, String.valueOf(earthquake.getLat())));
             longText.setText(context.getString(R.string.earthquake_long, String.valueOf(earthquake.getLon())));
             dateText.setText(context.getString(R.string.earthquake_date, earthquake.getDate()));
             categoryText.setText(context.getString(R.string.earthquake_category, earthquake.getCategory()));
 
-            String[] parsedMagnitude = kv.get("Magnitude").trim().split(" ");
             LinearLayout container = (LinearLayout) view.findViewById(R.id.earthquakeItem);
-            float magnitudeVal = Float.parseFloat(parsedMagnitude[0]);
-            if (magnitudeVal < 1.0){
+            if (earthquake.getMagnitude() < 1.0)
                 container.setBackgroundColor(green);
-            }
-            else if (magnitudeVal >= 1.0 && magnitudeVal < 3.0) {
+            else if (earthquake.getMagnitude() >= 1.0 && earthquake.getMagnitude() < 3.0)
                 container.setBackgroundColor(yellow);
-            }
-            else {
+            else
                 container.setBackgroundColor(red);
-            }
 
             Button button = (Button) view.findViewById(R.id.viewDetails);
             button.setOnClickListener(new View.OnClickListener() {
