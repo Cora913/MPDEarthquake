@@ -1,6 +1,13 @@
 package org.me.gcu.mpdearthquake;
 
+import android.text.TextUtils;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 public class EarthquakeItem {
     private String title;
@@ -9,7 +16,7 @@ public class EarthquakeItem {
     private float magnitude;
     private float depth;
     private String link;
-    private String date;
+    private Date date;
     private String category;
     private float lat;
     private float lon;
@@ -35,7 +42,19 @@ public class EarthquakeItem {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        String[] locationPart = location.toLowerCase().split(",");
+        for (int i = 0; i < locationPart.length; i++) {
+            String[] partWords = locationPart[i].split(" ");
+            for (int j = 0; j < partWords.length; j++) {
+                if (partWords[j].contains("and")) {
+                    continue;
+                }
+                partWords[j] = partWords[j].substring(0, 1).toUpperCase() + partWords[j].substring(1);
+            }
+            locationPart[i] = TextUtils.join(" ", partWords);
+        }
+        this.location = TextUtils.join(", ", locationPart);
+
     }
 
     public float getMagnitude() {
@@ -62,12 +81,18 @@ public class EarthquakeItem {
         this.link = link;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getDateToString() {
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(this.date);
+    }
+
+    public void setDate(String date) throws ParseException {
+        Date tmp = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.getDefault()).parse(date);
+        this.date = tmp;
     }
 
     public String getCategory() {
@@ -92,5 +117,21 @@ public class EarthquakeItem {
 
     public void setLon(float lon) {
         this.lon = lon;
+    }
+
+    @Override
+    public String toString() {
+        return "EarthquakeItem{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", magnitude=" + magnitude +
+                ", depth=" + depth +
+                ", link='" + link + '\'' +
+                ", date=" + date +
+                ", category='" + category + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                '}';
     }
 }

@@ -9,9 +9,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
@@ -23,6 +25,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
@@ -33,6 +36,7 @@ import com.mapbox.mapboxsdk.utils.BitmapUtils;
 import org.me.gcu.mpdearthquake.EarthquakeItem;
 import org.me.gcu.mpdearthquake.EarthquakeListViewModel;
 import org.me.gcu.mpdearthquake.R;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -42,55 +46,14 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconColor;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MapFragment extends Fragment {
 
     private MapView mapView;
     private ArrayList<EarthquakeItem> earthquakes;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MapFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(getActivity(), getString(R.string.mapbox_access_token));
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -104,24 +67,26 @@ public class MapFragment extends Fragment {
             earthquakes = items;
         });
 
-        mapView = (MapView) rootView.findViewById(R.id.earthquakeMapView);
+        mapView = rootView.findViewById(R.id.earthquakeMapView);
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/coraaa/ckmja6izd233q18qvhw0ksnyf"), new Style.OnStyleLoaded() {
-                    @Override
-                    public void onStyleLoaded(@NonNull Style style) {
+        mapView.getMapAsync(
+            mapboxMap -> {
+                mapboxMap.addOnMapClickListener(point -> {
+                    rootView.findViewById(R.id.detailsPanel).setVisibility(View.GONE);
+                    return false;
+                });
+                mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/coraaa/ckmja6izd233q18qvhw0ksnyf"),
+                    style -> {
                         // Map is set up and the style has loaded. Now you can add data or make other map adjustments
                         style.addImage("red", Objects.requireNonNull(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_mapbox_marker_icon_red)));
                         style.addImage("green", Objects.requireNonNull(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_mapbox_marker_icon_green)));
                         style.addImage("amber", Objects.requireNonNull(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_mapbox_marker_icon_amber)));
 
-                        SymbolManager symbolManager = new SymbolManager(mapView, mapboxMap, style);
-                        symbolManager.setIconAllowOverlap(true);
-                        symbolManager.setIconIgnorePlacement(true);
-
                         for (EarthquakeItem earthquake : earthquakes) {
+                            SymbolManager symbolManager = new SymbolManager(mapView, mapboxMap, style);
+                            symbolManager.setIconAllowOverlap(true);
+                            symbolManager.setIconIgnorePlacement(true);
+
                             String color;
                             if (earthquake.getMagnitude() < 1.0)
                                 color = "green";
@@ -131,14 +96,25 @@ public class MapFragment extends Fragment {
                                 color = "red";
 
                             symbolManager.create(new SymbolOptions()
-                                .withLatLng(new LatLng(earthquake.getLat(), earthquake.getLon()))
-                                .withIconImage(color)
-                                .withIconSize(1.2f));
+                                    .withLatLng(new LatLng(earthquake.getLat(), earthquake.getLon()))
+                                    .withIconImage(color)
+                                    .withIconSize(1.2f));
+                            symbolManager.addClickListener(symbol1 -> {
+                                rootView.findViewById(R.id.detailsPanel).setVisibility(View.VISIBLE);
+                                TextView magnitudeText = rootView.findViewById(R.id.selectedMagnitude);
+                                TextView depthText = rootView.findViewById(R.id.selectedDepth);
+                                TextView detailsText = rootView.findViewById(R.id.selectedDetails);
+                                TextView locationText = rootView.findViewById(R.id.selectedLocation);
+
+                                magnitudeText.setText(getString(R.string.earthquake_magnitude, earthquake.getMagnitude()));
+                                depthText.setText(getString(R.string.earthquake_depth, earthquake.getDepth()));
+                                detailsText.setText(getString(R.string.earthquake_panel_details, earthquake.getDateToString(), earthquake.getMagnitude(), earthquake.getDepth()));
+                                locationText.setText(earthquake.getLocation());
+                                return true;
+                            });
                         }
-                    }
-                });
-            }
-        });
+                    });
+            });
 
         return rootView;
     }

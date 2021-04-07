@@ -1,32 +1,21 @@
 package org.me.gcu.mpdearthquake;
 
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.media.Image;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.navigation.Navigation;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class EarthquakeListAdapter extends BaseAdapter {
     Context context;
@@ -61,7 +50,7 @@ public class EarthquakeListAdapter extends BaseAdapter {
         if (view == null) {
             LayoutInflater v;
             v = LayoutInflater.from(context);
-            view = v.inflate(R.layout.activity_earthquakelistview, null);
+            view = v.inflate(R.layout.earthquakelistview, null);
         }
 
         EarthquakeItem earthquake = getItem(i);
@@ -71,23 +60,23 @@ public class EarthquakeListAdapter extends BaseAdapter {
             int yellow = 0x88ffcc00;
             int green = 0x8833cc33;
 
-            TextView locationText = (TextView) view.findViewById(R.id.locationText);
-            TextView latText = (TextView) view.findViewById(R.id.latText);
-            TextView longText = (TextView) view.findViewById(R.id.longText);
-            TextView depthText = (TextView) view.findViewById(R.id.depthText);
-            TextView magnitudeText = (TextView) view.findViewById(R.id.magnitudeText);
-            TextView dateText = (TextView) view.findViewById(R.id.dateText);
-            TextView categoryText = (TextView) view.findViewById(R.id.categoryText);
+            TextView locationText = view.findViewById(R.id.locationText);
+            TextView latText = view.findViewById(R.id.latText);
+            TextView longText = view.findViewById(R.id.longText);
+            TextView depthText = view.findViewById(R.id.depthText);
+            TextView magnitudeText = view.findViewById(R.id.magnitudeText);
+            TextView dateText = view.findViewById(R.id.dateText);
+            TextView categoryText = view.findViewById(R.id.categoryText);
 
             locationText.setText(earthquake.getLocation());
             depthText.setText(context.getString(R.string.earthquake_depth, earthquake.getDepth()));
             magnitudeText.setText(context.getString(R.string.earthquake_magnitude, earthquake.getMagnitude()));
             latText.setText(context.getString(R.string.earthquake_lat, String.valueOf(earthquake.getLat())));
             longText.setText(context.getString(R.string.earthquake_long, String.valueOf(earthquake.getLon())));
-            dateText.setText(context.getString(R.string.earthquake_date, earthquake.getDate()));
+            dateText.setText(context.getString(R.string.earthquake_date, earthquake.getDateToString()));
             categoryText.setText(context.getString(R.string.earthquake_category, earthquake.getCategory()));
 
-            LinearLayout container = (LinearLayout) view.findViewById(R.id.earthquakeItem);
+            LinearLayout container = view.findViewById(R.id.earthquakeItem);
             if (earthquake.getMagnitude() < 1.0)
                 container.setBackgroundColor(green);
             else if (earthquake.getMagnitude() >= 1.0 && earthquake.getMagnitude() < 3.0)
@@ -95,11 +84,11 @@ public class EarthquakeListAdapter extends BaseAdapter {
             else
                 container.setBackgroundColor(red);
 
-            Button button = (Button) view.findViewById(R.id.viewDetails);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                   Log.e("EarthquakeListAdapter", "I clicked a button");
-                }
+            Button button = view.findViewById(R.id.viewDetails);
+            button.setOnClickListener(v -> {
+               Bundle bundle = new Bundle();
+               bundle.putInt("earthquakeId", i);
+               Navigation.findNavController((Activity) context, R.id.nav_host_fragment).navigate(R.id.action_show_earthquake_details, bundle);
             });
         }
         return view;

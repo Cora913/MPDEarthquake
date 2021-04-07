@@ -4,12 +4,23 @@
     <string name="home_tab">Earthquakes</string>
     <string name="date_tab">Search Date</string>
     <string name="map_tab">Map</string>
-    <string name="earthquake_depth">Depth: %1$.1f</string>
-    <string name="earthquake_magnitude">Magnitude: %1$.1f</string>
+    <string name="earthquake_depth">Depth: %1$.1f km</string>
+    <string name="earthquake_magnitude">Magnitude: %1$.1f ML</string>
     <string name="earthquake_lat">Latitude: %1$s</string>
     <string name="earthquake_long">Longitude: %1$s</string>
     <string name="earthquake_date">Date: %1$s</string>
     <string name="earthquake_category">Category: %1$s</string>
     <string name="view_details">View Details</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiY29yYWFhIiwiYSI6ImNrbWo5NWo4dzBvdGIyd2s1YWQ2OXgzb28ifQ.C2aRjhbXvuocwSsX0irZUA</string>
+    <string name="most_westerly">Most Westerly: %1$s</string>
+    <string name="most_easterly">Most Easterly: %1$s</string>
+    <string name="most_northerly">Most Northerly: %1$s</string>
+    <string name="most_southerly">Most Southerly: %1$s</string>
+    <string name="largest_magnitude">Largest Magnitude: %1$.1f ML</string>
+    <string name="deepest_earthquake">Deepest Earthquake: %1$.1f km</string>
+    <string name="shallowest_earthquake">Shallowest Earthquake: %1$.1f km</string>
+    <string name="earthquake_panel_details">This earthquake occurred on date: %1$s with a magnitude of %2$.1f on the Richter Scale with a depth of %3$.1f km</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="earthquake_screen">Earthquake Details</string>
 </resources>
