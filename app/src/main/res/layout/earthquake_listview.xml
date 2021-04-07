@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingVertical="5dp">
+    android:padding="5dp">
 
-    <include layout="@layout/earthquakeitem" />
+    <include layout="@layout/earthquake_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

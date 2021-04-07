@@ -1,4 +1,4 @@
-package org.me.gcu.mpdearthquake;
+package org.me.gcu.mpdearthquake.models;
 
 import android.text.TextUtils;
 

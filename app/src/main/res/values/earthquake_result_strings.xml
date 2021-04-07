@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="most_westerly_label">Most Westerly:</string>
+    <string name="most_easterly_label">Most Easterly:</string>
+    <string name="most_northerly_label">Most Northerly:</string>
+    <string name="most_southerly_label">Most Southerly:</string>
+    <string name="largest_magnitude_label">Largest Magnitude:</string>
+    <string name="largest_magnitude_value">%1$.1f ML</string>
+    <string name="deepest_earthquake_label">Deepest Earthquake:</string>
+    <string name="deepest_earthquake_value">%1$.1f km</string>
+    <string name="shallowest_earthquake_label">Shallowest Earthquake:</string>
+    <string name="shallowest_earthquake_value">%1$.1f km</string>
+</resources>

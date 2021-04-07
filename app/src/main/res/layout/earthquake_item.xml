@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/earthquakeItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/item_background"
+    android:padding="6dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/purple_700"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="{LOCATION}" />
+        <LinearLayout
+            android:id="@+id/coordinatesPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/locationText"
+            android:paddingVertical="10dp">
+            <LinearLayout
+                android:id="@+id/leftPanel"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <include
+                    layout="@layout/earthquake_item_data_line"
+                    android:id="@+id/latitude" />
+                <include
+                    layout="@layout/earthquake_item_data_line"
+                    android:id="@+id/longitude" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rightPanel"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <include
+                    layout="@layout/earthquake_item_data_line"
+                    android:id="@+id/depth" />
+                <include
+                    layout="@layout/earthquake_item_data_line"
+                    android:id="@+id/magnitude" />
+            </LinearLayout>
+        </LinearLayout>
+        <include
+            layout="@layout/earthquake_item_data_line"
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coordinatesPanel" />
+        <include
+            layout="@layout/earthquake_item_data_line"
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date" />
+        <Button
+            android:id="@+id/viewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/category"
+            android:layout_centerHorizontal="true"
+            android:text="@string/view_details" />
+    </RelativeLayout>
+</FrameLayout>

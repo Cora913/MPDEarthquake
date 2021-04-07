@@ -1,42 +1,26 @@
 package org.me.gcu.mpdearthquake.fragments;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.geojson.Point;
-import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
-import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.mapbox.mapboxsdk.utils.BitmapUtils;
 
-import org.me.gcu.mpdearthquake.EarthquakeItem;
-import org.me.gcu.mpdearthquake.EarthquakeListViewModel;
+import org.me.gcu.mpdearthquake.models.EarthquakeItem;
+import org.me.gcu.mpdearthquake.ui.EarthquakeItemUI;
+import org.me.gcu.mpdearthquake.viewmodels.EarthquakeListViewModel;
 import org.me.gcu.mpdearthquake.R;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -100,16 +84,13 @@ public class MapFragment extends Fragment {
                                     .withIconImage(color)
                                     .withIconSize(1.2f));
                             symbolManager.addClickListener(symbol1 -> {
-                                rootView.findViewById(R.id.detailsPanel).setVisibility(View.VISIBLE);
-                                TextView magnitudeText = rootView.findViewById(R.id.selectedMagnitude);
-                                TextView depthText = rootView.findViewById(R.id.selectedDepth);
-                                TextView detailsText = rootView.findViewById(R.id.selectedDetails);
-                                TextView locationText = rootView.findViewById(R.id.selectedLocation);
 
-                                magnitudeText.setText(getString(R.string.earthquake_magnitude, earthquake.getMagnitude()));
-                                depthText.setText(getString(R.string.earthquake_depth, earthquake.getDepth()));
+                                rootView.findViewById(R.id.detailsPanel).setVisibility(View.VISIBLE);
+                                TextView detailsText = rootView.findViewById(R.id.details);
                                 detailsText.setText(getString(R.string.earthquake_panel_details, earthquake.getDateToString(), earthquake.getMagnitude(), earthquake.getDepth()));
-                                locationText.setText(earthquake.getLocation());
+                                EarthquakeItemUI.setLocationField(rootView, earthquake);
+                                EarthquakeItemUI.setMagnitudeField(rootView, requireActivity(), earthquake);
+                                EarthquakeItemUI.setDepthField(rootView, requireActivity(), earthquake);
                                 return true;
                             });
                         }

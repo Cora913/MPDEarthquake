@@ -6,14 +6,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -22,8 +19,9 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 
-import org.me.gcu.mpdearthquake.EarthquakeItem;
-import org.me.gcu.mpdearthquake.EarthquakeListViewModel;
+import org.me.gcu.mpdearthquake.models.EarthquakeItem;
+import org.me.gcu.mpdearthquake.ui.EarthquakeItemUI;
+import org.me.gcu.mpdearthquake.viewmodels.EarthquakeListViewModel;
 import org.me.gcu.mpdearthquake.R;
 
 import java.util.Objects;
@@ -53,21 +51,14 @@ public class EarthquakeDetailsFragment extends Fragment {
         itemViewModel.getEarthquakes().observe(getViewLifecycleOwner(), items -> {
             selectedEarthquake = items.get(earthquakeId);
 
-            TextView locationText = rootView.findViewById(R.id.locationText);
-            TextView latText = rootView.findViewById(R.id.latText);
-            TextView longText = rootView.findViewById(R.id.longText);
-            TextView depthText = rootView.findViewById(R.id.depthText);
-            TextView magnitudeText = rootView.findViewById(R.id.magnitudeText);
-            TextView dateText = rootView.findViewById(R.id.dateText);
-            TextView categoryText = rootView.findViewById(R.id.categoryText);
-
-            locationText.setText(selectedEarthquake.getLocation());
-            depthText.setText(requireActivity().getString(R.string.earthquake_depth, selectedEarthquake.getDepth()));
-            magnitudeText.setText(requireActivity().getString(R.string.earthquake_magnitude, selectedEarthquake.getMagnitude()));
-            latText.setText(requireActivity().getString(R.string.earthquake_lat, String.valueOf(selectedEarthquake.getLat())));
-            longText.setText(requireActivity().getString(R.string.earthquake_long, String.valueOf(selectedEarthquake.getLon())));
-            dateText.setText(requireActivity().getString(R.string.earthquake_date, selectedEarthquake.getDateToString()));
-            categoryText.setText(requireActivity().getString(R.string.earthquake_category, selectedEarthquake.getCategory()));
+            EarthquakeItemUI.setLocationField(rootView, selectedEarthquake);
+            EarthquakeItemUI.setLatitudeField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setLongitudeField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setDepthField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setMagnitudeField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setDateField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setCategoryField(rootView, requireActivity(), selectedEarthquake);
+            EarthquakeItemUI.setBackground(rootView, selectedEarthquake);
 
             mapView = rootView.findViewById(R.id.earthquakeMapView);
             mapView.onCreate(savedInstanceState);

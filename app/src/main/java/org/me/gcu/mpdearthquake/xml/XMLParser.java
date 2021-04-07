@@ -1,11 +1,8 @@
-package org.me.gcu.mpdearthquake;
-import android.os.AsyncTask;
+package org.me.gcu.mpdearthquake.xml;
+
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
+import org.me.gcu.mpdearthquake.models.EarthquakeItem;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -16,45 +13,27 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.Buffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class EarthquakeListViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<EarthquakeItem>> earthquakes;
-    private ExecutorService threadExecutor;
-    private String url = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
+public class XMLParser {
+    private ExecutorService urlReadThread;
+    private ExecutorService xmlParseThread;
 
-    public LiveData<ArrayList<EarthquakeItem>> getEarthquakes() {
-        if (earthquakes == null) {
-            earthquakes = new MutableLiveData<>();
-            loadEarthquakes();
-        }
-        return earthquakes;
+    public XMLParser() {
+        this.urlReadThread = Executors.newSingleThreadExecutor();
+        this.xmlParseThread = Executors.newSingleThreadExecutor();
     }
 
-    private void loadEarthquakes() {
-        try {
-            threadExecutor = Executors.newSingleThreadExecutor();
-            ArrayList<EarthquakeItem> items = parseEarthquakes(url).get();
-            earthquakes.setValue(items);
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public Future<ArrayList<EarthquakeItem>> parseEarthquakes(String url) {
-        return threadExecutor.submit(() -> {
+    public Future<String> readURL(String url) {
+        return urlReadThread.submit(() -> {
             try {
-                Log.e("EarthquakeListViewModel", "Parsing");
+                Log.e("XMLParser", String.format("Reading URL: %s", url));
+
                 URL XMLUrl = new URL(url);
                 URLConnection conn = XMLUrl.openConnection();
                 BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -64,7 +43,18 @@ public class EarthquakeListViewModel extends ViewModel {
                     data = data + line;
                 }
                 buffer.close();
+                return data;
 
+            } catch(IOException err) {
+                Log.e("XMLParser", "Could not read URL content: " + err.toString());
+                throw new Exception(err);
+            }
+        });
+    }
+
+    public Future<ArrayList<EarthquakeItem>> parseXML(String data) {
+        return xmlParseThread.submit(() -> {
+            try {
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
@@ -136,8 +126,8 @@ public class EarthquakeListViewModel extends ViewModel {
                     }
                 }
                 return items;
-            } catch(IOException | XmlPullParserException err) {
-                Log.e("XMLParser", "Parser Error: " + err.toString());
+            } catch(XmlPullParserException err) {
+                Log.e("XMLParser", "XML could not be parsed: " + err.toString());
                 throw new Exception(err);
             }
         });

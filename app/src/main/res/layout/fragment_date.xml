@@ -1,90 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.DateFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="30dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/purple_200"
+            android:textStyle="bold"
+            android:text="FROM" />
+        <Button
+            android:id="@+id/btnDateFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="Select date" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/purple_200"
+            android:textStyle="bold"
+            android:text="TO" />
+        <Button
+            android:id="@+id/btnDateTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="Select date" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/panel_border"
+        android:layout_margin="10dp"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/dateResult"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="30dp"
-            android:orientation="vertical">
-            <TextView
+            android:orientation="vertical"
+            android:visibility="gone">
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/mostNortherly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="From:" />
-            <Button
-                android:id="@+id/btnDateFrom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Select date" />
-            <TextView
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/mostSoutherly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="To:" />
-            <Button
-                android:id="@+id/btnDateTo"
-                android:layout_width="wrap_content"
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/mostWesterly"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Select date" />
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/mostEasterly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/largestMagnitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/deepestEarthquake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp" />
+            <include
+                layout="@layout/earthquake_item_data_line"
+                android:id="@+id/shallowestEarthquake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/noResults"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/dateResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/mostNortherly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/mostSoutherly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/mostWesterly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/mostEasterly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/largestMagnitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/deepestEarthquake"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-                <TextView
-                    android:id="@+id/shallowestEarthquake"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:text="No results found within this time frame"
+            android:textColor="@color/fail"
+            android:textStyle="bold"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/findInitial"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text="Select a time frame to see overall statistics about that period"
+            android:textColor="@color/black"
+            android:visibility="visible" />
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

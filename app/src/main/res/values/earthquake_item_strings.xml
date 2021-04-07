@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="earthquake_depth_label">Depth:</string>
+    <string name="earthquake_depth_value">%1$.1f km</string>
+    <string name="earthquake_magnitude_label">Magnitude:</string>
+    <string name="earthquake_magnitude_value">%1$.1f ML</string>
+    <string name="earthquake_lat_label">Latitude:</string>
+    <string name="earthquake_long_label">Longitude:</string>
+    <string name="earthquake_date_label">Date:</string>
+    <string name="earthquake_category_label">Category:</string>
+    <string name="view_details">View Details</string>
+</resources>

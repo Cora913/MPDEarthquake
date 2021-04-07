@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.MapFragment">
 
+    <include layout="@layout/mapbox_map" />
+
     <RelativeLayout
+        android:id="@+id/detailsPanel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/mapbox_map" />
-
-        <RelativeLayout
-            android:id="@+id/detailsPanel"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/panel_border"
+        android:visibility="gone">
+        <View android:id="@+id/strut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+        <include
+            layout="@layout/earthquake_item_data_line"
+            android:id="@+id/magnitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/strut"
+            android:layout_alignParentStart="true" />
+        <include
+            layout="@layout/earthquake_item_data_line"
+            android:id="@+id/depth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/strut"
+            android:layout_alignParentEnd="true"
+            android:gravity="end" />
+        <TextView
+            android:id="@+id/locationText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="65dp"
-            android:background="@drawable/panel_border"
-            android:visibility="gone">
-            <View android:id="@+id/strut"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerHorizontal="true"/>
-            <TextView
-                android:id="@+id/selectedMagnitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/strut"
-                android:layout_alignParentStart="true" />
-            <TextView
-                android:id="@+id/selectedDepth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/strut"
-                android:layout_alignParentEnd="true"
-                android:gravity="end"/>
-            <TextView
-                android:id="@+id/selectedLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/selectedMagnitude"
-                android:gravity="center"
-                android:padding="2dp"/>
-            <TextView
-                android:id="@+id/selectedDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:layout_below="@id/selectedLocation"/>
-        </RelativeLayout>
-
+            android:layout_below="@id/magnitude"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textColor="@color/purple_700"
+            android:textStyle="bold"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:layout_below="@id/locationText"/>
     </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

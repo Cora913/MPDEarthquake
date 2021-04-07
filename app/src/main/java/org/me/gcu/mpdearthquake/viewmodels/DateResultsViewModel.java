@@ -1,8 +1,10 @@
-package org.me.gcu.mpdearthquake;
+package org.me.gcu.mpdearthquake.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import org.me.gcu.mpdearthquake.models.EarthquakeItem;
 
 import java.util.ArrayList;
 
