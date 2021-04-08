@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Author
+    Andreea-Cora Tibuc-Boboc
+    S1703130
+-->
 <resources>
     <string name="most_westerly_label">Most Westerly:</string>
     <string name="most_easterly_label">Most Easterly:</string>

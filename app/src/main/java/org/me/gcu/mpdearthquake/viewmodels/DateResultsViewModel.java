@@ -1,3 +1,8 @@
+/**
+ * @author Andreea-Cora Tibuc-Boboc
+ * @student_id S1703130
+ */
+
 package org.me.gcu.mpdearthquake.viewmodels;
 
 import androidx.lifecycle.LiveData;

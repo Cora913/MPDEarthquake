@@ -1,5 +1,9 @@
-package org.me.gcu.mpdearthquake.lists;
+/**
+ * @author Andreea-Cora Tibuc-Boboc
+ * @student_id S1703130
+ */
 
+package org.me.gcu.mpdearthquake.lists;
 
 import android.app.Activity;
 import android.content.Context;

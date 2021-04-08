@@ -1,3 +1,8 @@
+/**
+ * @author Andreea-Cora Tibuc-Boboc
+ * @student_id S1703130
+ */
+
 package org.me.gcu.mpdearthquake.xml;
 
 import android.util.Log;
@@ -21,16 +26,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class XMLParser {
-    private ExecutorService urlReadThread;
     private ExecutorService xmlParseThread;
 
     public XMLParser() {
-        this.urlReadThread = Executors.newSingleThreadExecutor();
         this.xmlParseThread = Executors.newSingleThreadExecutor();
     }
 
     public Future<String> readURL(String url) {
-        return urlReadThread.submit(() -> {
+        return xmlParseThread.submit(() -> {
             try {
                 Log.e("XMLParser", String.format("Reading URL: %s", url));
 

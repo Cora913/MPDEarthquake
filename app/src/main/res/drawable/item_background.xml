@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Author
+    Andreea-Cora Tibuc-Boboc
+    S1703130
+-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
     <corners android:radius="5dp"/>
     <stroke android:width="4dp" android:color="#000"/>

@@ -1,3 +1,8 @@
+/**
+ * @author Andreea-Cora Tibuc-Boboc
+ * @student_id S1703130
+ */
+
 package org.me.gcu.mpdearthquake.fragments;
 
 import android.app.DatePickerDialog;
