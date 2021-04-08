@@ -88,3 +88,5 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+!apk/MPDEarthquake.apk
