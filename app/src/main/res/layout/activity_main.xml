@@ -31,4 +31,14 @@
         app:itemTextColor="#fff"
         app:menu="@menu/navigation_menu" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="S1703130"
+        android:textColor="#223700B3"
+        android:textStyle="bold"
+        android:textSize="80dp"
+        android:elevation="10dp" />
+
 </RelativeLayout>
